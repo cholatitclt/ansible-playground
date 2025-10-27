@@ -1,0 +1,20 @@
+---
+# Debug Ansible facts
+
+- name: Debug Ansible Facts
+  hosts: group3
+  become: false
+  gather_facts: true
+
+  tasks:
+    - name: Display mount points
+      ansible.builtin.debug:
+        msg: "Memory points: {{ ansible_memory_mb }}"
+
+    - name: Display all fact names
+      ansible.builtin.debug:
+        msg: "Memory points: {{ ansible_memfree_mb }}"
+
+          # - name: Display all facts (JSON)
+          #ansible.builtin.debug:
+          #var: ansible_facts

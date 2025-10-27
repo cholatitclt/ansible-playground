@@ -1,0 +1,14 @@
+---
+# Register Variables Example
+- name: testping
+  hosts: group3
+
+  tasks:
+    - name: Get system pingtest
+      ansible.builtin.command: ping -c 3 8.8.8.8
+      register: pingtest_result
+      changed_when: false
+
+    - name: Display ping
+      ansible.builtin.debug:
+        msg: "System testping: {{ pingtest_result.stdout }}"
