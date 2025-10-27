@@ -1,0 +1,28 @@
+---
+# Debug variables with programming languages list
+
+- name: interview
+  hosts: localhost
+  become: false
+
+  vars:
+    name: cholatit
+    hobby:
+      - sport
+      - movie
+      - anime
+      - game
+
+  tasks:
+    - name: Print all hobby
+      ansible.builtin.debug:
+        msg: "All hobby: {{hobby}}"
+
+    - name: Print best hobby
+      ansible.builtin.debug:
+        msg: "interview: {{ name }}"
+
+    - name: Print hobby with loop
+      ansible.builtin.debug:
+        msg: "hobby: {{ item }}"
+      loop: "{{ hobby }}"

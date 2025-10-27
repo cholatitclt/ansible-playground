@@ -1,0 +1,10 @@
+# Ping 8.8.8.8
+
+- name: Ping 8.8.8.8
+  hosts: group3
+  become: false
+
+  tasks:
+    - name: Ping 8.8.8.8
+      ansible.builtin.command: ping -c 3 8.8.8.8
+      changed_when: false
