@@ -8,3 +8,4 @@
     - name: Ping 8.8.8.8
       ansible.builtin.command: ping -c 3 8.8.8.8
       changed_when: false
+      when: inventory_hostname == 'g301'
