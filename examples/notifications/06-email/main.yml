@@ -1,31 +1,23 @@
 ---
-# Play 1: Gather facts from remote hosts
-- name: Gather facts from remote hosts
-  hosts: group1-og
-  gather_facts: yes
-  tasks:
-    - name: Dummy task to ensure facts are gathered
-      debug:
-        msg: "Facts gathered for {{ inventory_hostname }}"
-
-# Play 2: Process and send email from localhost
 - name: Send Email with HTML Attachment
-  hosts: localhost
-  connection: local
-  gather_facts: no
+  hosts: group3
+  gather_facts: yes
   vars_files:
     - vars/email_config.yml
   
   tasks:
-#   - name: Get all hosts facts
-#     debug:
-#       var: hostvars
+
+ #   - name: Get all hosts facts
+ #     debug:
+ #       var: hostvars
 
     - name: Create consolidated HTML report for all hosts
       template:
         src: templates/email-report.html.j2
         dest: "/tmp/email-report-consolidated.html"
         mode: '0644'
+      delegate_to: localhost
+      run_once: true
 
     - name: Send email with HTML attachment
       community.general.mail:
@@ -39,8 +31,13 @@
         body: "{{ email_body }}"
         attach: "/tmp/email-report-consolidated.html"
         secure: "{{ smtp_secure }}"
+      delegate_to: localhost
+      run_once: true
 
     - name: Clean up temporary HTML file
       file:
         path: "/tmp/email-report-consolidated.html"
         state: absent
+      delegate_to: localhost
+      run_once: true
+
