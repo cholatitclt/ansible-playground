@@ -1,0 +1,4 @@
+Hostname: {{ ansible_facts.hostname }}
+IP Address: {{ ansible_facts.default_ipv4.address }}
+Timestamp: {{ ansible_date_time.iso8601 }}
+disk: {{ ansible_memfree_mb }}
