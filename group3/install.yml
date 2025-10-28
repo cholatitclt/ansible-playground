@@ -1,0 +1,24 @@
+# Install packages and start services using loop
+- name: Install packages and start services
+  hosts: group3
+  become: true
+
+  vars:
+    packages:
+      - httpd
+      - podman
+
+  tasks:
+    - name: Install packages
+      ansible.builtin.dnf:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ packages }}"
+
+    - name: Start and enable services
+      ansible.builtin.service:
+        name: "{{ item }}"
+        state: started
+        enabled: true
+      loop: "{{ packages }}"
+
